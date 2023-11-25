@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { usuarioAdapter } from './page/reducer/user.reducer';
 import { User, UsuarioState } from './interfaces/user.model';
-import { agregarUsuario } from './page/actions/user.actions';
+import { agregarUsuario, editarUsuario, eliminarUsuario } from './page/actions/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
     this.userForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       telefono: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]]
     })
   }
 
@@ -40,6 +40,12 @@ export class AppComponent {
       this.emailInvalido = this.userForm.get('email')?.invalid || false;
     }
   }
-  
 
+  editarUsuario(id: number, cambios: Partial<User>) {
+    this.store.dispatch(editarUsuario({ id, cambios }));
+  }
+
+  eliminarUsuario(id: number) {
+    this.store.dispatch(eliminarUsuario({ id }));
+  }
 }

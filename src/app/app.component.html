@@ -17,7 +17,6 @@
   </div>
   <button type="submit" class="btn btn-primary">Agregar</button>
 </form>
-
 <table class="table mt-6" *ngFor="let user of users$ | async">
   <thead>
     <tr>
@@ -32,5 +31,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.telefono }}</td>  
     </tr>
+    <button type="button" class="btn btn-primary" (click)="editarUsuario(user.id, { nombre: 'Nuevo nombre' })">Editar</button>
+    <button type="button" class="btn btn-danger" (click)="eliminarUsuario(user.id)">Eliminar</button>
   </tbody>
 </table>
